@@ -23,7 +23,8 @@ knitr::opts_chunk$set(
 parsesum provides tools to analyze source code. To this end, it leverages
 the R base parser.
 
-## Example
+## Working with function delcarations
+
 
 For example, did you want to know how many functions you declared in your 
 R package? Here is how you can get the names of all your named delared 
@@ -31,14 +32,14 @@ functions, enriched with some useful information, for example how many
 line each function declaration spans.
 ```{r}
 library(parsesum)
-fun_decs <- ls_fun_decs(".")
-fun_decs
+decs <- ls_fun_decs(".")
+decs
 ```
 
 Wanna know which file contains most delcarations?
 ```{r}
 library(dplyr)
-fun_decs %>%
+decs %>%
   group_by(.data$source) %>%
   count() %>%
   arrange(desc(n))
@@ -46,14 +47,27 @@ fun_decs %>%
 
 Or list according to longest name?
 ```{r}
-fun_decs %>%
+decs %>%
   mutate(nchar = nchar(.data$text)) %>%
   arrange(desc(.data$nchar))
 ```
 
 Or wanna see the function that is the shortest in terms of lines used?
 ```{r}
-fun_decs %>%
+decs %>%
   arrange(.data$n_lines)
+```
+
+
+## Working with function calls
+
+How many function calls does your package contain?
+```{r}
+calls <- ls_fun_calls() 
+
+calls
+
+calls %>%
+  nrow()
 ```
 

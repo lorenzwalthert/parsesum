@@ -2,6 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
 *This is highly expermantal*
 
 # parsesum
@@ -9,7 +10,7 @@
 parsesum provides tools to analyze source code. To this end, it
 leverages the R base parser.
 
-## Example
+## Working with function delcarations
 
 For example, did you want to know how many functions you declared in
 your R package? Here is how you can get the names of all your named
@@ -18,8 +19,8 @@ how many line each function declaration spans.
 
 ``` r
 library(parsesum)
-fun_decs <- ls_fun_decs(".")
-fun_decs
+decs <- ls_fun_decs(".")
+decs
 #> # A tibble: 15 x 4
 #>    text                    n_lines source        line1
 #>    <chr>                     <int> <chr>         <int>
@@ -52,7 +53,7 @@ library(dplyr)
 #> The following objects are masked from 'package:base':
 #> 
 #>     intersect, setdiff, setequal, union
-fun_decs %>%
+decs %>%
   group_by(.data$source) %>%
   count() %>%
   arrange(desc(n))
@@ -68,7 +69,7 @@ fun_decs %>%
 Or list according to longest name?
 
 ``` r
-fun_decs %>%
+decs %>%
   mutate(nchar = nchar(.data$text)) %>%
   arrange(desc(.data$nchar))
 #> # A tibble: 15 x 5
@@ -94,7 +95,7 @@ fun_decs %>%
 Or wanna see the function that is the shortest in terms of lines used?
 
 ``` r
-fun_decs %>%
+decs %>%
   arrange(.data$n_lines)
 #> # A tibble: 15 x 4
 #>    text                    n_lines source        line1
@@ -114,4 +115,32 @@ fun_decs %>%
 #> 13 parse_file                    5 ./R/parse.R       4
 #> 14 parse_dir                     8 ./R/parse.R      21
 #> 15 ls_named_fun_decs_of_pd      15 ./R/analyse.R     3
+```
+
+## Working with function calls
+
+How many function calls does your package contain?
+
+``` r
+calls <- ls_fun_calls() 
+
+calls
+#> # A tibble: 29 x 10
+#>    line1  col1 line2  col2    id parent token    terminal text     source 
+#>    <int> <int> <int> <int> <int>  <int> <chr>    <lgl>    <chr>    <chr>  
+#>  1     4    15     4    30    20     22 SYMBOL_… TRUE     token_i… ./R/an…
+#>  2     5    18     5    37    36     38 SYMBOL_… TRUE     token_i… ./R/an…
+#>  3     6    15     6    19    52     54 SYMBOL_… TRUE     which    ./R/an…
+#>  4     7     5     7     8    56     58 SYMBOL_… TRUE     lead     ./R/an…
+#>  5     8     5     8     8    81     83 SYMBOL_… TRUE     lead     ./R/an…
+#>  6    12    14    12    21   163    165 SYMBOL_… TRUE     map2_int ./R/an…
+#>  7    15     5    15    14   208    210 SYMBOL_… TRUE     add_col… ./R/an…
+#>  8    16     5    16    17   220    222 SYMBOL_… TRUE     select_… ./R/an…
+#>  9    20    18    20    22   260    262 SYMBOL_… TRUE     which    ./R/an…
+#> 10    41     3    41     9   403    405 SYMBOL_… TRUE     parse_r  ./R/an…
+#> # ... with 19 more rows
+
+calls %>%
+  nrow()
+#> [1] 29
 ```
