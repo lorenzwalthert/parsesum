@@ -5,13 +5,13 @@ ls_named_fun_decs_of_pd <- function(pd) {
   left_assign <- token_is_left_assign(pd)
   name_pos <- which(
     lead(left_assign, n = 2, default = FALSE) &
-    lead(fun_decs, n = 4, default = FALSE)
+      lead(fun_decs, n = 4, default = FALSE)
   )
   parents <- pd$parent[name_pos + 2]
   source <- pd$source[name_pos + 2]
   n_lines <- map2_int(parents, source, n_lines_of_expr, pd = pd)
 
-  pd[name_pos,] %>%
+  pd[name_pos, ] %>%
     add_column(n_lines)
 }
 
