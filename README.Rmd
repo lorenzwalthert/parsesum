@@ -1,0 +1,59 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+  [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+  
+*This is highly expermantal*
+  
+
+# parsesum
+
+parsesum provides tools to analyze source code. To this end, it leverages
+the R base parser.
+
+## Example
+
+For example, did you want to know how many functions you declared in your 
+R package? Here is how you can get the names of all your named delared 
+functions, enriched with some useful information, for example how many 
+line each function declaration spans.
+```{r}
+library(parsesum)
+fun_decs <- ls_fun_decs(".")
+fun_decs
+```
+
+Wanna know which file contains most delcarations?
+```{r}
+library(dplyr)
+fun_decs %>%
+  group_by(.data$source) %>%
+  count() %>%
+  arrange(desc(n))
+```
+
+Or list according to longest name?
+```{r}
+fun_decs %>%
+  mutate(nchar = nchar(.data$text)) %>%
+  arrange(desc(.data$nchar))
+```
+
+Or wanna see the function that is the shortest in terms of lines used?
+```{r}
+fun_decs %>%
+  arrange(.data$n_lines)
+```
+

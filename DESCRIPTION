@@ -1,0 +1,24 @@
+Package: parsesum
+Type: Package
+Title: Analyse source code through parsing
+Version: 0.0.9000
+Authors@R: person("Lorenz", "Walthert", email =
+        "lorenz.walthert@icloud.com", role = c("aut", "cre"))
+Maintainer: Lorenz Walthert <lorenz.walthert@icloud.com>
+Description: This package builds on top of the R base parser to derive 
+    different figures of interest of a project a parser is suited to answer. 
+    How many functions are delcared in this project? What's their name? How 
+    How many lines of code per function / in total? Which functions are called
+    most often? And so on...
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Imports: 
+    utils,
+    tibble,
+    fs,
+    magrittr,
+    purrr,
+    dplyr,
+    rlang
