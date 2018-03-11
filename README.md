@@ -21,24 +21,23 @@ how many line each function declaration spans.
 library(parsesum)
 decs <- ls_fun_decs(".")
 decs
-#> # A tibble: 15 x 4
+#> # A tibble: 14 x 4
 #>    text                    n_lines source        line1
 #>    <chr>                     <int> <chr>         <int>
-#>  1 ls_named_fun_decs_of_pd      15 ./R/analyse.R     3
-#>  2 n_lines_of_expr               4 ./R/analyse.R    19
-#>  3 ls_fun_decs                   4 ./R/analyse.R    40
-#>  4 fetch_child                   3 ./R/analyse.R    45
-#>  5 select_for_ui                 4 ./R/analyse.R    51
-#>  6 ls_fun_calls                  4 ./R/analyse.R    60
-#>  7 ls_fun_calls_of_pd            3 ./R/analyse.R    65
-#>  8 token_is_fun_dec              3 ./R/expr-is.R     1
-#>  9 token_is_left_assign          3 ./R/expr-is.R     5
-#> 10 set_na_to                     4 ./R/expr-is.R     9
-#> 11 token_is_fun_call             3 ./R/expr-is.R    14
-#> 12 parse_file                    5 ./R/parse.R       4
-#> 13 parse_r                       4 ./R/parse.R      11
-#> 14 parse_tests                   4 ./R/parse.R      16
-#> 15 parse_dir                     8 ./R/parse.R      21
+#>  1 ls_named_fun_decs_of_pd      14 ./R/analyse.R     3
+#>  2 n_lines_of_expr               4 ./R/analyse.R    18
+#>  3 ls_fun_decs                   5 ./R/analyse.R    41
+#>  4 fetch_child                   3 ./R/analyse.R    47
+#>  5 ls_fun_calls                  5 ./R/analyse.R    56
+#>  6 ls_fun_calls_of_pd            3 ./R/analyse.R    64
+#>  7 token_is_fun_dec              3 ./R/expr-is.R     1
+#>  8 token_is_left_assign          3 ./R/expr-is.R     5
+#>  9 set_na_to                     4 ./R/expr-is.R     9
+#> 10 token_is_fun_call             3 ./R/expr-is.R    14
+#> 11 parse_file                    5 ./R/parse.R       4
+#> 12 parse_r                       4 ./R/parse.R      11
+#> 13 parse_tests                   4 ./R/parse.R      16
+#> 14 parse_dir                     8 ./R/parse.R      21
 ```
 
 Wanna know which file contains most delcarations?
@@ -61,7 +60,7 @@ decs %>%
 #> # Groups:   source [3]
 #>   source            n
 #>   <chr>         <int>
-#> 1 ./R/analyse.R     7
+#> 1 ./R/analyse.R     6
 #> 2 ./R/expr-is.R     4
 #> 3 ./R/parse.R       4
 ```
@@ -72,24 +71,23 @@ Or list according to longest name?
 decs %>%
   mutate(nchar = nchar(.data$text)) %>%
   arrange(desc(.data$nchar))
-#> # A tibble: 15 x 5
+#> # A tibble: 14 x 5
 #>    text                    n_lines source        line1 nchar
 #>    <chr>                     <int> <chr>         <int> <int>
-#>  1 ls_named_fun_decs_of_pd      15 ./R/analyse.R     3    23
+#>  1 ls_named_fun_decs_of_pd      14 ./R/analyse.R     3    23
 #>  2 token_is_left_assign          3 ./R/expr-is.R     5    20
-#>  3 ls_fun_calls_of_pd            3 ./R/analyse.R    65    18
+#>  3 ls_fun_calls_of_pd            3 ./R/analyse.R    64    18
 #>  4 token_is_fun_call             3 ./R/expr-is.R    14    17
 #>  5 token_is_fun_dec              3 ./R/expr-is.R     1    16
-#>  6 n_lines_of_expr               4 ./R/analyse.R    19    15
-#>  7 select_for_ui                 4 ./R/analyse.R    51    13
-#>  8 ls_fun_calls                  4 ./R/analyse.R    60    12
-#>  9 ls_fun_decs                   4 ./R/analyse.R    40    11
-#> 10 fetch_child                   3 ./R/analyse.R    45    11
-#> 11 parse_tests                   4 ./R/parse.R      16    11
-#> 12 parse_file                    5 ./R/parse.R       4    10
-#> 13 set_na_to                     4 ./R/expr-is.R     9     9
-#> 14 parse_dir                     8 ./R/parse.R      21     9
-#> 15 parse_r                       4 ./R/parse.R      11     7
+#>  6 n_lines_of_expr               4 ./R/analyse.R    18    15
+#>  7 ls_fun_calls                  5 ./R/analyse.R    56    12
+#>  8 ls_fun_decs                   5 ./R/analyse.R    41    11
+#>  9 fetch_child                   3 ./R/analyse.R    47    11
+#> 10 parse_tests                   4 ./R/parse.R      16    11
+#> 11 parse_file                    5 ./R/parse.R       4    10
+#> 12 set_na_to                     4 ./R/expr-is.R     9     9
+#> 13 parse_dir                     8 ./R/parse.R      21     9
+#> 14 parse_r                       4 ./R/parse.R      11     7
 ```
 
 Or wanna see the function that is the shortest in terms of lines used?
@@ -97,24 +95,23 @@ Or wanna see the function that is the shortest in terms of lines used?
 ``` r
 decs %>%
   arrange(.data$n_lines)
-#> # A tibble: 15 x 4
+#> # A tibble: 14 x 4
 #>    text                    n_lines source        line1
 #>    <chr>                     <int> <chr>         <int>
-#>  1 fetch_child                   3 ./R/analyse.R    45
-#>  2 ls_fun_calls_of_pd            3 ./R/analyse.R    65
+#>  1 fetch_child                   3 ./R/analyse.R    47
+#>  2 ls_fun_calls_of_pd            3 ./R/analyse.R    64
 #>  3 token_is_fun_dec              3 ./R/expr-is.R     1
 #>  4 token_is_left_assign          3 ./R/expr-is.R     5
 #>  5 token_is_fun_call             3 ./R/expr-is.R    14
-#>  6 n_lines_of_expr               4 ./R/analyse.R    19
-#>  7 ls_fun_decs                   4 ./R/analyse.R    40
-#>  8 select_for_ui                 4 ./R/analyse.R    51
-#>  9 ls_fun_calls                  4 ./R/analyse.R    60
-#> 10 set_na_to                     4 ./R/expr-is.R     9
-#> 11 parse_r                       4 ./R/parse.R      11
-#> 12 parse_tests                   4 ./R/parse.R      16
-#> 13 parse_file                    5 ./R/parse.R       4
-#> 14 parse_dir                     8 ./R/parse.R      21
-#> 15 ls_named_fun_decs_of_pd      15 ./R/analyse.R     3
+#>  6 n_lines_of_expr               4 ./R/analyse.R    18
+#>  7 set_na_to                     4 ./R/expr-is.R     9
+#>  8 parse_r                       4 ./R/parse.R      11
+#>  9 parse_tests                   4 ./R/parse.R      16
+#> 10 ls_fun_decs                   5 ./R/analyse.R    41
+#> 11 ls_fun_calls                  5 ./R/analyse.R    56
+#> 12 parse_file                    5 ./R/parse.R       4
+#> 13 parse_dir                     8 ./R/parse.R      21
+#> 14 ls_named_fun_decs_of_pd      14 ./R/analyse.R     3
 ```
 
 ## Working with function calls
@@ -125,19 +122,19 @@ How many function calls does your package contain?
 calls <- ls_fun_calls() 
 
 calls
-#> # A tibble: 29 x 10
-#>    line1  col1 line2  col2    id parent token    terminal text     source 
-#>    <int> <int> <int> <int> <int>  <int> <chr>    <lgl>    <chr>    <chr>  
-#>  1     4    15     4    30    20     22 SYMBOL_… TRUE     token_i… ./R/an…
-#>  2     5    18     5    37    36     38 SYMBOL_… TRUE     token_i… ./R/an…
-#>  3     6    15     6    19    52     54 SYMBOL_… TRUE     which    ./R/an…
-#>  4     7     5     7     8    56     58 SYMBOL_… TRUE     lead     ./R/an…
-#>  5     8     5     8     8    81     83 SYMBOL_… TRUE     lead     ./R/an…
-#>  6    12    14    12    21   163    165 SYMBOL_… TRUE     map2_int ./R/an…
-#>  7    15     5    15    14   208    210 SYMBOL_… TRUE     add_col… ./R/an…
-#>  8    16     5    16    17   220    222 SYMBOL_… TRUE     select_… ./R/an…
-#>  9    20    18    20    22   260    262 SYMBOL_… TRUE     which    ./R/an…
-#> 10    41     3    41     9   403    405 SYMBOL_… TRUE     parse_r  ./R/an…
+#> # A tibble: 29 x 3
+#>    text                    source        line1
+#>    <chr>                   <chr>         <int>
+#>  1 token_is_fun_dec        ./R/analyse.R     4
+#>  2 token_is_left_assign    ./R/analyse.R     5
+#>  3 which                   ./R/analyse.R     6
+#>  4 lead                    ./R/analyse.R     7
+#>  5 lead                    ./R/analyse.R     8
+#>  6 map2_int                ./R/analyse.R    12
+#>  7 add_column              ./R/analyse.R    15
+#>  8 which                   ./R/analyse.R    19
+#>  9 parse_r                 ./R/analyse.R    42
+#> 10 ls_named_fun_decs_of_pd ./R/analyse.R    43
 #> # ... with 19 more rows
 
 calls %>%

@@ -12,8 +12,7 @@ ls_named_fun_decs_of_pd <- function(pd) {
   n_lines <- map2_int(parents, source, n_lines_of_expr, pd = pd)
 
   pd[name_pos,] %>%
-    add_column(n_lines) %>%
-    select_for_ui()
+    add_column(n_lines)
 }
 
 n_lines_of_expr <- function(id, source, pd) {
@@ -37,21 +36,18 @@ n_lines_of_expr <- function(id, source, pd) {
 #' * on what line they start (column `line1`).
 #' * and many lines long they are (column `n_lines`).
 #' @export
+#' @importFrom dplyr select
+#' @importFrom rlang .data
 ls_fun_decs <- function(path = ".") {
   parse_r(path) %>%
-    ls_named_fun_decs_of_pd()
+    ls_named_fun_decs_of_pd() %>%
+    select(.data$text, .data$n_lines, .data$source, .data$line1)
 }
 
 fetch_child <- function(pd, pos_of_child, pos_in_child, attribute) {
   pd[[pos_of_child]][pos_in_child, attribute]
 }
 
-#' @importFrom dplyr select
-#' @importFrom rlang .data
-select_for_ui <- function(pd) {
-  pd %>%
-    select(.data$text, .data$n_lines, .data$source, .data$line1)
-}
 
 #' Lista ll function calls in a source package
 #'
@@ -59,9 +55,12 @@ select_for_ui <- function(pd) {
 #' @export
 ls_fun_calls <- function(path = ".") {
   parse_r(path) %>%
-    ls_fun_calls_of_pd()
+    ls_fun_calls_of_pd() %>%
+    select(.data$text, .data$source, .data$line1)
 }
 
+#' @importFrom dplyr select
+#' @importFrom rlang .data
 ls_fun_calls_of_pd <- function(pd) {
   pd[token_is_fun_call(pd), ]
 }
