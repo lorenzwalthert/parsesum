@@ -14,3 +14,7 @@ set_na_to <- function(vec, default) {
 token_is_fun_call <- function(pd) {
   pd$token == "SYMBOL_FUNCTION_CALL"
 }
+
+token_is_namespace <- function(pd) {
+  pd$token == "SYMBOL_PACKAGE"
+}

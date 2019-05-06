@@ -1,7 +1,7 @@
 Package: parsesum
 Type: Package
 Title: Analyse source code through parsing
-Version: 0.0.9000
+Version: 0.0.9001
 Authors@R: person("Lorenz", "Walthert", email =
         "lorenz.walthert@icloud.com", role = c("aut", "cre"))
 Maintainer: Lorenz Walthert <lorenz.walthert@icloud.com>

@@ -56,11 +56,17 @@ fetch_child <- function(pd, pos_of_child, pos_in_child, attribute) {
 ls_fun_calls <- function(path = ".") {
   parse_r(path) %>%
     ls_fun_calls_of_pd() %>%
-    select(.data$text, .data$source, .data$line1)
+    select(.data$text, .data$source, .data$line1, .data$namespace)
 }
 
 #' @importFrom dplyr select
 #' @importFrom rlang .data
 ls_fun_calls_of_pd <- function(pd) {
-  pd[token_is_fun_call(pd), ]
+  calls <- pd[token_is_fun_call(pd), ]
+  namespaces <- pd[token_is_namespace(pd), ]
+  namespaces$namespace <- namespaces$text
+  merge(calls, namespaces[, c("parent", "namespace")],
+    all.x = TRUE, all.y = FALSE
+  ) %>%
+    as_tibble()
 }
